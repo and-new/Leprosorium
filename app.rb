@@ -14,13 +14,23 @@ end
 before do
 	init_db
 end
-
+# configure вызывается каждый раз при конфигурации приложения
+# когда изменился код программы и перезагрузилась страница
 configure do
+	# инициализация БД
 	init_db
+	# создает таблицу если таблица не существует
 	@db.execute 'create table if not exists Posts 
 	(id INTEGER PRIMARY KEY AUTOINCREMENT,
 	created_date DATE, 
-	content TEXT);'
+	content TEXT)'
+
+# создает таблицу если таблица не существует
+	@db.execute 'create table if not exists Comments 
+	(id INTEGER PRIMARY KEY AUTOINCREMENT,
+	created_date DATE, 
+	content TEXT,
+	post_id INTEGER)'
 end
 
 get '/' do
